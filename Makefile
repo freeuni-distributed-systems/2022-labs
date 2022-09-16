@@ -21,20 +21,7 @@ LABS=" lab1 lab2a lab2b lab2c lab2d lab3a lab3b lab4a lab4b "
 			"--exclude=src/main/mrworker" \
 			"--exclude=*.so" \
 			Makefile src; \
-		if ! test -e api.key ; then \
-			echo "Missing $(PWD)/api.key. Please create the file with your key in it or submit the $@-handin.tar.gz via the web interface."; \
-		else \
-			echo "Are you sure you want to submit $@? Enter 'yes' to continue:"; \
-			read line; \
-			if test "$$line" != "yes" ; then echo "Giving up submission"; exit; fi; \
-			if test `stat -c "%s" "$@-handin.tar.gz" 2>/dev/null || stat -f "%z" "$@-handin.tar.gz"` -ge 20971520 ; then echo "File exceeds 20MB."; exit; fi; \
-			cat api.key | tr -d '\n' > .api.key.trimmed ; \
-			curl --silent --fail --show-error -F file=@$@-handin.tar.gz -F "key=<.api.key.trimmed" \
-			https://6824.scripts.mit.edu/2022/handin.py/upload > /dev/null || { \
-				echo ; \
-				echo "Submit seems to have failed."; \
-				echo "Please upload the tarball manually on the submission website."; } \
-		fi; \
+		echo "Please submit the $@-handin.tar.gz via the Google Classroom web interface."; \
 	else \
 		echo "Bad target $@. Usage: make [$(LABS)]"; \
 	fi
@@ -42,4 +29,4 @@ LABS=" lab1 lab2a lab2b lab2c lab2d lab3a lab3b lab4a lab4b "
 .PHONY: check-%
 check-%:
 	@echo "Checking that your submission builds correctly..."
-	@./.check-build git://g.csail.mit.edu/6.824-golabs-2022 $(patsubst check-%,%,$@)
+	@./.check-build https://github.com/freeuni-distributed-systems/2021-labs.git $(patsubst check-%,%,$@)
