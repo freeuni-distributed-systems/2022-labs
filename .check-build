@@ -34,11 +34,7 @@ REFERENCE_FILES=(
 )
 
 main() {
-    upstream="$1"
-    labnum="$2"
-
-    # make sure we have reference copy of lab, in FETCH_HEAD
-    git fetch "$upstream" 2>/dev/null || die "unable to git fetch $upstream"
+    labnum="$1"
 
     # copy existing directory
     tmpdir="$(mktemp -d)"
@@ -50,7 +46,7 @@ main() {
     # check out reference files
     for f in ${REFERENCE_FILES[@]}; do
         mkdir -p "$(dirname $f)"
-        git --git-dir="$orig/.git" show "FETCH_HEAD:$f" > "$f"
+	cp -f "$orig/.og/$f" $f
     done
 
     case $labnum in

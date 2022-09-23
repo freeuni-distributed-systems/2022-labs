@@ -1,6 +1,5 @@
 # This is the Makefile helping you submit the labs.
-# Just create 6.824/api.key with your API key in it,
-# and submit your lab with the following command:
+# Archive your lab with the following command:
 #     $ make [lab1|lab2a|lab2b|lab2c|lab2d|lab3a|lab3b|lab4a|lab4b]
 
 LABS=" lab1 lab2a lab2b lab2c lab2d lab3a lab3b lab4a lab4b "
@@ -29,4 +28,4 @@ LABS=" lab1 lab2a lab2b lab2c lab2d lab3a lab3b lab4a lab4b "
 .PHONY: check-%
 check-%:
 	@echo "Checking that your submission builds correctly..."
-	@./.check-build https://github.com/freeuni-distributed-systems/2021-labs.git $(patsubst check-%,%,$@)
+	@./.check-build $(patsubst check-%,%,$@)
